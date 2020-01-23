@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Head Hot</title>
+</head>
+<body>
+
+
+    {% for vacancy in vacancies %}
+        <table border="2">
+        <br>
+            <tr><td>id</td> <td>{{ vacancy.id }} </tr></td><br>
+            <tr><td>title</td> <td>{{ vacancy.title}} </tr></td><br>
+            <tr><td>description</td> <td>{{ vacancy.description }} </tr></td><br>
+            <tr><td>state</td> <td>{{ vacancy.state }} </tr></td><br>
+            <tr><td>owner</td> <td>{{ vacancy.owner }} </tr></td><br>
+        <br>
+        </table>
+    {% endfor %}
+
+
+</body>
+</html>
