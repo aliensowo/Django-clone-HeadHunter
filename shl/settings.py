@@ -11,6 +11,23 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import djcelery
+# указываем на то, что расписание будет задаваться посредством django-ORM
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+# указываем брокер сообщений
+BROKER_URL = 'redis://127.0.0.1:6379/0'
+# указываем хранилище результатов (можете не указывать)
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+# формат хранения задач (можете не указывать)
+CELERY_TASK_SERIALIZER = 'json'
+# формат хранения результатов (можете не указывать)
+CELERY_RESULT_SERIALIZER = 'json'
+# если настроены джанговские параметры уведомлений по почте
+# и данный параметр True, то исключения в задачах будут
+# фиксироваться на почте администраторов приложения
+CELERY_SEND_TASK_ERROR_EMAILS = True
+# инициализация django-celery
+djcelery.setup_loader()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'djcelery',
     'api',
     'headhot',
     'test',
@@ -58,7 +76,7 @@ ROOT_URLCONF = 'shl.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'api/templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'api/../headhot/templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {

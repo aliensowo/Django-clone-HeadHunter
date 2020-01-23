@@ -1,5 +1,6 @@
 from django.db import models
 from jsonfield import JSONField
+from user.models import User
 
 try:
     from django.utils import six
@@ -32,3 +33,15 @@ class Vacancy(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class VacancyBack(models.Model):
+    """
+    Vacancy back relations
+    """
+
+    vacancy_owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    vacancy_id = models.OneToOneField(Vacancy, on_delete=models.CASCADE, primary_key=True)
+
+    def __str__(self):
+        return self.vacancy_owner + "is owner of vacancy id" + self.vacancy_id
